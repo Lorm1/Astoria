@@ -1,0 +1,9 @@
+name: Astoria
+version: 1.0
+main: me.george.astoria.Astoria
+prefix: Astoria
+authors: [George_Angel]
+description: Astoria RPG
+api-version: 1.14
+
+commands:
