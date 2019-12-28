@@ -12,7 +12,7 @@ public class MechanicManager {
     }
 
     /**
-     * Loads all of our game mechanics.
+     * Load all of mechanics.
      */
     public static void loadMechanics() {
         for (MechanicPriority ep : MechanicPriority.values())
@@ -21,7 +21,7 @@ public class MechanicManager {
     }
 
     /**
-     * Shutdown all of our mechanics.
+     * Shutdown all of mechanics.
      */
     public static void stopMechanics() {
         for (MechanicPriority ep : MechanicPriority.values())

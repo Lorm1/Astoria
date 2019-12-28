@@ -2,10 +2,10 @@ package me.george.astoria.game.command.mode;
 
 import me.george.astoria.game.Rank;
 import me.george.astoria.game.command.BaseCommand;
-import me.george.astoria.game.player.APlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -15,16 +15,15 @@ import static me.george.astoria.game.player.APlayer.getInstanceOfPlayer;
 public class CommandSpeed extends BaseCommand {
 
     public CommandSpeed() {
-        super("/speed", "/speed <value> (0-10)", "Sets your flying speed.", Arrays.asList("sp"));
+        super("/speed","/speed <value> (0-10)", "Sets your flying speed.", Arrays.asList("sp"));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
-        Player p = (Player) sender;
-        APlayer player = getInstanceOfPlayer(p);
+        if (!(sender instanceof ConsoleCommandSender) || (sender instanceof Player && !(getInstanceOfPlayer((Player) sender)).getRank().equals(Rank.ADMIN))) return true;
 
-        if (!player.getRank().equals(Rank.ADMIN)) return true;
+        Player p = (Player) sender;
 
         if (args.length <= 1) {
             p.sendMessage(ChatColor.RED + usage);

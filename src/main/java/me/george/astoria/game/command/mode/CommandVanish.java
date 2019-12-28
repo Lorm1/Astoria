@@ -17,7 +17,7 @@ import static me.george.astoria.game.player.APlayer.getInstanceOfPlayer;
 public class CommandVanish extends BaseCommand {
 
     public CommandVanish() {
-        super("vanish", "/vanish or /vanish <player>", "Vanishes yourself or a player.", Arrays.asList("v", "invisible", "invis"));
+        super("vanish","/vanish or /vanish <player>", "Vanishes yourself or a player.", Arrays.asList("v", "invisible", "invis"));
     }
 
     @Override
@@ -28,28 +28,24 @@ public class CommandVanish extends BaseCommand {
             APlayer player = getInstanceOfPlayer(p);
 
             if (!player.isStaff()) return true;
-
             if (Astoria._hiddenPlayers.contains(p)) {
                 Astoria._hiddenPlayers.add(p);
                 for (Player pl : Bukkit.getOnlinePlayers()) {
-                    pl.hidePlayer(p);
+                    pl.hidePlayer(Astoria.getInstance(), p);
                     p.setPlayerListName(null);
                 }
                 p.sendMessage(ChatColor.AQUA + "Vanish - " + ChatColor.GREEN.toString() + ChatColor.BOLD + "ENABLED");
-                return true;
             } else {
                 Astoria._hiddenPlayers.remove(p);
                 for (Player pl : Bukkit.getOnlinePlayers()) {
-                    pl.showPlayer(p);
+                    pl.showPlayer(Astoria.getInstance(), p);
                     p.setPlayerListName(p.getDisplayName());
                 }
                 p.sendMessage(ChatColor.AQUA + "Vanish - " + ChatColor.RED.toString() + ChatColor.BOLD + "DISABLED");
-                return true;
             }
         } else if (args.length == 1) {
             if (sender instanceof ConsoleCommandSender || (sender instanceof Player && getInstanceOfPlayer((Player) sender).isStaff())) {
                 Player target = Bukkit.getPlayer(args[0]);
-
                 if (!target.isOnline() || target == null) {
                     sender.sendMessage(ChatColor.RED + "That player is not online.");
                     return true;
@@ -61,17 +57,16 @@ public class CommandVanish extends BaseCommand {
                     target.sendMessage(ChatColor.GREEN + "You were vanishe.");
 
                     for (Player pl : Bukkit.getOnlinePlayers()) {
-                        pl.hidePlayer(target);
+                        pl.hidePlayer(Astoria.getInstance(), target);
                         target.setPlayerListName(null);
                     }
-                    return true;
                 } else {
                     Astoria._hiddenPlayers.remove(target);
                     sender.sendMessage(ChatColor.RED + "Unvanished player " + ChatColor.YELLOW + getInstanceOfPlayer(target).getDisplayName());
                     target.sendMessage(ChatColor.RED + "You were unvanished.");
 
                     for (Player pl : Bukkit.getOnlinePlayers()) {
-                        pl.showPlayer(target);
+                        pl.showPlayer(Astoria.getInstance(), target);
                         target.setPlayerListName(getInstanceOfPlayer(target).getDisplayName());
                     }
                 }

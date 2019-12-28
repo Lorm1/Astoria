@@ -57,6 +57,8 @@ public class Chat implements Listener {
         Bukkit.getLogger().info("[CHAT] " + formattedMessage);
     }
 
+    // TODO: Change this crap to be more flexible lol
+
     public List<String> bannedWords = new ArrayList<>(Arrays.asList(
             "shit", "fuck", "cunt", "bitch", "whore",
             "slut", "wank", "asshole", "cock", "dick",
@@ -64,7 +66,7 @@ public class Chat implements Listener {
             "nigger", "n1gger", "n1gg3r", "nigga", "dike",
             "dyke", "retard", " " + "motherfucker",
             "pussy", "rape", "cunt", "faggot", "blowjob",
-            "handjob", "bast", "minecade", "d1ck", "wynncraft", "hitler",
+            "handjob", "d1ck", "wynncraft", "hitler",
             "fucked", "niger", "kys"));
 
     private String toCensor(int characters) {
@@ -73,7 +75,6 @@ public class Chat implements Listener {
             result = result.concat("*");
         return result;
     }
-
 
     private String checkForBannedWords(String msg) {
         String result = msg;

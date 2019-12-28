@@ -1,12 +1,13 @@
 package me.george.astoria.game.command.mode;
 
+import me.george.astoria.game.Rank;
 import me.george.astoria.game.command.BaseCommand;
-import me.george.astoria.game.player.APlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -21,12 +22,17 @@ public class CommandGameMode extends BaseCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!(sender instanceof ConsoleCommandSender) || (sender instanceof Player && !(getInstanceOfPlayer((Player) sender)).getRank().equals(Rank.ADMIN))) return true;
+
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + usage);
         } else if (args.length == 1) {
-            Player p = (Player) sender;
-            APlayer player = getInstanceOfPlayer(p);
+            if (sender instanceof ConsoleCommandSender) {
+                sender.sendMessage("The console cannot execute this command.");
+                return true;
+            }
 
+            Player p = (Player) sender;
             if (args[0].equalsIgnoreCase("creative") || args[0].equals("1")) {
                 if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                     p.setGameMode(GameMode.CREATIVE);

@@ -13,7 +13,7 @@ public class MessageUtils {
         for (Player player : Bukkit.getOnlinePlayers()) {
             APlayer pl = getInstanceOfPlayer(player);
             if (pl.isStaff())
-                pl.sendMessage(ChatColor.RED + "[" + ChatColor.DARK_RED + "STAFF" + ChatColor.RED + "] " + ChatColor.RESET + message);
+                pl.sendMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + ">> "+ ChatColor.RESET + message);
         }
     }
 }

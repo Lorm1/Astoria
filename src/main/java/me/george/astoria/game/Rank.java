@@ -39,14 +39,6 @@ public enum Rank {
         return Arrays.stream(values()).filter(rank -> rank.getInternalName().equals(name.toLowerCase())).findFirst().orElse(null);
     }
 
-    public boolean isDonator() {
-        return isAtLeast(Rank.DONATOR);
-    }
-
-    public boolean isStaff() {
-        return isAtLeast(Rank.MOD);
-    }
-
     public int getRank() {
         return ordinal();
     }

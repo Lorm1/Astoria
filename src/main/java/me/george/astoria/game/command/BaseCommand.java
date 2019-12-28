@@ -1,5 +1,6 @@
 package me.george.astoria.game.command;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 
@@ -9,7 +10,8 @@ import java.util.List;
 public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 
     protected final String command, description, usage, permMessage;
-    protected final List<String> alias;
+    @Getter protected final List<String> aliases;
+    // @Getter protected final List<Requirement> requirements;
 
     protected static CommandMap cmap;
 
@@ -26,8 +28,8 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
     /**
      * Command and usage.
      *
-     * @param command the command.
-     * @param usage   The command usage
+     * @param command      the command.
+     * @param usage        The command usage
      * @since 1.0
      */
     public BaseCommand(String command, String usage) {
@@ -37,9 +39,9 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
     /**
      * Command, usage & description!
      *
-     * @param command     the command.
-     * @param usage       The command usage
-     * @param description About the command.
+     * @param command      the command.
+     * @param usage        The command usage
+     * @param description  About the command.
      * @since 1.0
      */
     public BaseCommand(String command, String usage, String description) {
@@ -62,10 +64,10 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
     /**
      * Command, usage, description and aliases.
      *
-     * @param command     the command.
-     * @param usage       The command usage
-     * @param description About the command.
-     * @param aliases     Aliases.
+     * @param command      the command.
+     * @param usage        The command usage
+     * @param description  About the command.
+     * @param aliases      Aliases.
      */
     public BaseCommand(String command, String usage, String description, List<String> aliases) {
         this(command, usage, description, null, aliases);
@@ -86,12 +88,15 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
         this.usage = usage;
         this.description = description;
         this.permMessage = permissionMessage;
-        this.alias = aliases;
+        this.aliases = aliases;
     }
 
+    /**
+     * Handle command registering server-wide.
+     */
     public void register() {
         ReflectCommand cmd = new ReflectCommand(this.command);
-        if (this.alias != null) cmd.setAliases(this.alias);
+        if (this.aliases != null) cmd.setAliases(this.aliases);
         if (this.description != null) cmd.setDescription(this.description);
         if (this.usage != null) cmd.setUsage(this.usage);
         if (this.permMessage != null) cmd.setPermissionMessage(this.permMessage);
@@ -99,6 +104,10 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
         cmd.setExecutor(this);
     }
 
+    /**
+     * Return the usage of the command.
+     * @return String (usage)
+     */
     public String getUsage() {
         return this.usage != null ? this.usage.replace("<command>", this.command) : "";
     }
@@ -118,6 +127,58 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
         }
         return getCommandMap();
     }
+
+//    public void addRequirement(Requirement r) {
+//        requirements.add(r);
+//    }
+//
+//    public boolean hasRequirement(CommandSender s, Requirement r) {
+//        switch (r) {
+//            case PLAYER:
+//                if (!(s instanceof Player))
+//                    return false;
+//                break;
+//            case DEV:
+//                if (s instanceof Player) {
+//                    if (!getInstanceOfPlayer((Player) s).getRank().equals(Rank.DEV))
+//                        return false;
+//                }
+//            case ADMIN:
+//                if (s instanceof Player) {
+//                    if (getInstanceOfPlayer((Player) s).getRank().equals(Rank.ADMIN) || getInstanceOfPlayer((Player) s).getRank().equals(Rank.DEV))
+//                        return true;
+//                }
+//                break;
+//            case MODERATOR:
+//                if (s instanceof Player) {
+//                    if (!getInstanceOfPlayer((Player) s).isStaff())
+//                        return false;
+//                }
+//                break;
+//            case DONATOR:
+//                if (s instanceof Player) {
+//                    if (!getInstanceOfPlayer((Player) s).isDonator() || !getInstanceOfPlayer((Player) s).isStaff());
+//                        return false;
+//                }
+//                break;
+//            case NONE:
+//                return true;
+//        }
+//        return true;
+//    }
+
+//    public boolean meetsRequirements(BaseCommand c, CommandSender s) {
+//        for (Requirement r : c.getRequirements()) {
+//            if (!c.hasRequirement(s, r)) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+
+//    public enum Requirement {
+//        PLAYER, DEV, ADMIN, MODERATOR, DONATOR, CONSOLE, NONE;
+//    }
 
     private final class ReflectCommand extends Command {
         private BaseCommand exe = null;

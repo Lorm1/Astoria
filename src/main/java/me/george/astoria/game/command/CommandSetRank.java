@@ -28,7 +28,6 @@ public class CommandSetRank extends BaseCommand {
             }
 
             String targetName = args[0];
-
             if (Bukkit.getPlayer(targetName) != null) {
                 APlayer targetPlayer = getInstanceOfPlayer(Bukkit.getPlayer(targetName));
                 if ((targetPlayer.getRank().equals(Rank.ADMIN) && !(sender instanceof ConsoleCommandSender)) && targetPlayer.getPlayer() != sender) {
@@ -38,12 +37,11 @@ public class CommandSetRank extends BaseCommand {
 
                 if (Rank.isValidRank(args[1].toUpperCase())) {
                     targetPlayer.setRank(Rank.valueOf(args[1].toUpperCase()));
-                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + "'s rank to " + targetPlayer.getRank().getChatPrefix() + ".");
+                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + ChatColor.GREEN + "'s rank to " + targetPlayer.getRank().getPrefix() + ".");
                 } else
                     sender.sendMessage(ChatColor.RED + "Invalid Rank.");
-            } else {
+            } else
                 sender.sendMessage(ChatColor.RED + "That player is not online.");
-            }
         }
         return true;
     }

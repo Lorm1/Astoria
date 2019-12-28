@@ -21,23 +21,26 @@ public class CommandGod extends BaseCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
-            if (sender instanceof Player) {
-                Player p = (Player) sender;
-                APlayer player = getInstanceOfPlayer(p);
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "The console cannot execute this command.");
+                return true;
+            }
 
-                if (!player.getRank().equals(Rank.ADMIN)) return true;
-                if (!p.isInvulnerable()) {
-                    p.setInvulnerable(true);
-                    p.sendMessage(ChatColor.AQUA + "God Mode - " + ChatColor.GREEN.toString() + ChatColor.BOLD + "Enabled");
-                    return true;
-                } else {
-                    p.setInvulnerable(false);
-                    p.sendMessage(ChatColor.AQUA + "God Mode - " + ChatColor.RED.toString() + ChatColor.BOLD + "Disabled");
-                }
+            Player p = (Player) sender;
+            APlayer player = getInstanceOfPlayer(p);
+
+            if (!player.getRank().equals(Rank.ADMIN)) return true;
+
+            if (!p.isInvulnerable()) {
+                p.setInvulnerable(true);
+                p.sendMessage(ChatColor.AQUA + "God Mode - " + ChatColor.GREEN.toString() + ChatColor.BOLD + "Enabled");
+                return true;
+            } else {
+                p.setInvulnerable(false);
+                p.sendMessage(ChatColor.AQUA + "God Mode - " + ChatColor.RED.toString() + ChatColor.BOLD + "Disabled");
             }
         } else if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
-
             if (target == null) {
                 sender.sendMessage(ChatColor.RED + "That player is not online.");
                 return true;
@@ -47,12 +50,10 @@ public class CommandGod extends BaseCommand {
                 target.setInvulnerable(true);
                 sender.sendMessage(ChatColor.GREEN + "Enabled God Mode for " + ChatColor.YELLOW + target.getName());
                 target.sendMessage(ChatColor.GREEN + "You are now in God Mode.");
-                return true;
             } else {
                 target.setInvulnerable(false);
                 sender.sendMessage(ChatColor.RED + "Disabled God Mode for " + ChatColor.YELLOW + target.getName());
                 target.sendMessage(ChatColor.RED + "You are no longer in God Mode.");
-                return true;
             }
         } else {
             sender.sendMessage(ChatColor.RED + usage);

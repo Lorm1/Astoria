@@ -5,17 +5,19 @@ import lombok.Setter;
 import me.george.astoria.game.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class APlayer {
 
-    @Getter
-    private static Map<UUID, APlayer> astoriaPlayers = new ConcurrentHashMap<>();
+    @Getter private static Map<UUID, APlayer> astoriaPlayers = new ConcurrentHashMap<>();
 
     Player player;
     UUID uuid;
@@ -24,7 +26,7 @@ public class APlayer {
     int gold, ecash;
 
     @Getter @Setter
-    int monsterKills, playerKills, deaths;
+    int mobKills, playerKills, deaths;
 
     @Getter @Setter
     int level;
@@ -34,6 +36,25 @@ public class APlayer {
 
     @Getter @Setter
     Rank rank;
+
+    @Getter @Setter
+    Location playerLocation;
+
+    @Getter @Setter
+    String bannedBy, mutedBy;
+
+    @Getter @Setter
+    String muteReason, banReason;
+
+    @Getter @Setter
+    Boolean isBanned;
+
+    @Getter @Setter
+    Timestamp joinDate, lastLogin, lastLogout;
+
+    @Getter @Setter
+    Time banDuration;
+
 
     public void addGold(int gold) {
         assert gold >= 0;
