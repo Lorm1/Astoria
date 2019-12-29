@@ -11,7 +11,6 @@ import me.george.astoria.game.command.chat.CommandShout;
 import me.george.astoria.game.command.item.CommandGive;
 import me.george.astoria.game.command.mode.*;
 import me.george.astoria.game.mechanic.TestMechanic;
-import me.george.astoria.game.mechanic.profession.Profession;
 import me.george.astoria.game.mechanic.template.MechanicManager;
 import me.george.astoria.game.player.PlayerConnection;
 import me.george.astoria.game.server.Setup;
@@ -69,7 +68,6 @@ public class Astoria extends JavaPlugin {
     }
 
     private void registerMechanics() {
-        MechanicManager.registerMechanic(new Profession());
         MechanicManager.registerMechanic(new TestMechanic());
 
         MechanicManager.loadMechanics();
