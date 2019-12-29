@@ -3,6 +3,7 @@ package me.george.astoria.game.player;
 import lombok.Getter;
 import lombok.Setter;
 import me.george.astoria.game.Rank;
+import me.george.astoria.game.nation.Nation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -36,6 +37,9 @@ public class APlayer {
 
     @Getter @Setter
     Rank rank;
+
+    @Getter @Setter
+    Nation nation;
 
     @Getter @Setter
     Location playerLocation;
@@ -112,7 +116,9 @@ public class APlayer {
 
     public String getDisplayName() {
         Rank rank = getRank();
-        ChatColor nameColor = isStaff() ? rank.getChatColor() : ChatColor.GRAY;
+        Nation nation = getNation();
+
+        ChatColor nameColor = isStaff() ? rank.getChatColor() : nation.getColor(); /*ChatColor.GRAY*/; // Display rank color for staff and nation color for everyone else.
         return nameColor + (isOnline() ? getPlayer().getName() : getName());
     }
 

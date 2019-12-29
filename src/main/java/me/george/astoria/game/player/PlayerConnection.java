@@ -1,6 +1,7 @@
 package me.george.astoria.game.player;
 
 import me.george.astoria.game.Rank;
+import me.george.astoria.game.nation.Nation;
 import me.george.astoria.networking.database.DatabaseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -31,6 +32,7 @@ public class PlayerConnection implements Listener {
 
         // TODO: Database access on-join ?
         player.setRank(Rank.ADMIN); // DEBUG
+        player.setNation(Nation.ORCS); // DEBUG
     }
 
     @EventHandler

@@ -28,6 +28,7 @@ import java.util.Set;
 public class Astoria extends JavaPlugin {
 
     private static Astoria instance = null;
+
     public static Astoria getInstance() {
         return instance;
     }
@@ -40,6 +41,7 @@ public class Astoria extends JavaPlugin {
     public void onEnable() {
         instance = this;
         database.getInstance().connect();
+
         Bukkit.getLogger().info("Enabling Astoria v." + Constants.SERVER_VERSION);
 
         setup();
@@ -63,6 +65,7 @@ public class Astoria extends JavaPlugin {
 
     private void shutdown() {
         MechanicManager.stopMechanics();
+        _hiddenPlayers.clear();
     }
 
     private void registerMechanics() {

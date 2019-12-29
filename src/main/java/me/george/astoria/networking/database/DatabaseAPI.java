@@ -1,6 +1,7 @@
 package me.george.astoria.networking.database;
 
 import me.george.astoria.game.Rank;
+import me.george.astoria.game.nation.Nation;
 import me.george.astoria.game.player.APlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -52,6 +53,7 @@ public class DatabaseAPI {
 
             String playerName = rs.getString("NAME");
             String rank = rs.getString("RANK");
+            String nation = rs.getString("NATION");
 
             int gold = rs.getInt("GOLD");
             int ecash = rs.getInt("ECASH");
@@ -69,6 +71,7 @@ public class DatabaseAPI {
 
             // Load player data
             pl.setRank(Rank.valueOf(rank));
+            pl.setNation(Nation.valueOf(nation));
 
             pl.setGold(gold);
             pl.setEcash(ecash);
@@ -88,7 +91,7 @@ public class DatabaseAPI {
             Bukkit.getLogger().info("[Database] Loaded player " + player.getName());
 
             if (!playerExists(uuid)) {
-                PreparedStatement ps = prepareStatement("INSERT INTO player_info(UUID, NAME, RANK, GOLD, ECASH, JOIN_DATE, LAST_LOGIN, LAST_LOGOUT, IS_BANNED, BAN_DURATION, BAN_REASON, BANNED_BY) VALUES ('" + uuid.toString() + "'," + "'" + player.getName() + "', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);");
+                PreparedStatement ps = prepareStatement("INSERT INTO player_info(UUID, NAME, RANK, NATION, GOLD, ECASH, JOIN_DATE, LAST_LOGIN, LAST_LOGOUT, IS_BANNED, BAN_DURATION, BAN_REASON, BANNED_BY) VALUES ('" + uuid.toString() + "'," + "'" + player.getName() + "', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);"); // Default Rank: DEFAULT, Default Nation: HUMANS.
                 ps.executeUpdate();
                 ps.close();
 
@@ -104,6 +107,21 @@ public class DatabaseAPI {
     public void getRank(final UUID uuid) {
         try {
             PreparedStatement ps = prepareStatement("SELECT RANK FROM player_info WHERE UUID = ?");
+            ps.setString(1, uuid.toString());
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getNation(final UUID uuid) {
+        try {
+            PreparedStatement ps = prepareStatement("SELECT NATION FROM player_info WHERE UUID = ?");
             ps.setString(1, uuid.toString());
 
             ResultSet rs = ps.executeQuery();
