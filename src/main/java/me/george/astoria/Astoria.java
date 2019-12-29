@@ -15,6 +15,8 @@ import me.george.astoria.game.mechanic.profession.Profession;
 import me.george.astoria.game.mechanic.template.MechanicManager;
 import me.george.astoria.game.player.PlayerConnection;
 import me.george.astoria.game.server.Setup;
+import me.george.astoria.game.world.Restrictions;
+import me.george.astoria.networking.database.Database;
 import me.george.astoria.utils.ConcurrentSet;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,11 +32,14 @@ public class Astoria extends JavaPlugin {
         return instance;
     }
 
+    private Database database;
+
     public static Set<Player> _hiddenPlayers = new ConcurrentSet<>();
 
     @Override
     public void onEnable() {
         instance = this;
+        database.getInstance().connect();
         Bukkit.getLogger().info("Enabling Astoria v." + Constants.SERVER_VERSION);
 
         setup();
@@ -43,6 +48,8 @@ public class Astoria extends JavaPlugin {
     @Override
     public void onDisable() {
         instance = null;
+        // database.getInstance().disconnect(); We dont want to be disabling the database
+
         Bukkit.getLogger().info("Disabling Astoria v." + Constants.SERVER_VERSION);
 
         shutdown();
@@ -71,6 +78,7 @@ public class Astoria extends JavaPlugin {
         m.registerEvents(new Setup(), this);
         m.registerEvents(new PlayerConnection(), this);
         m.registerEvents(new Chat(), this);
+        m.registerEvents(new Restrictions(), this);
     }
 
     private void registerCommands() {
