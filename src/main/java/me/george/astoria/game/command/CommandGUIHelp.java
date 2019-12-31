@@ -74,7 +74,7 @@ public class CommandGUIHelp extends BaseCommand {
         for (int i = lowerBound; i < upperBound; i++)
             shownCommands.add(commands.get(i));
 
-
+        helpMenu.open(player, page);
     }
 
     private int getTotalPages() { return (int) Math.ceil((double) commands.size() / perPage); }
