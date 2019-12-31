@@ -54,7 +54,7 @@ public class APlayer {
     Boolean isBanned;
 
     @Getter @Setter
-    Timestamp joinDate, lastLogin, lastLogout;
+    Timestamp joinDate, lastLogin;
 
     @Getter @Setter
     Time banDuration;
@@ -115,10 +115,10 @@ public class APlayer {
     }
 
     public String getDisplayName() {
-        Rank rank = getRank();
+        // Rank rank = getRank();
         Nation nation = getNation();
 
-        ChatColor nameColor = isStaff() ? rank.getChatColor() : nation.getColor(); /*ChatColor.GRAY*/; // Display rank color for staff and nation color for everyone else.
+        ChatColor nameColor = /*isStaff() ? rank.getChatColor() : */ nation.getColor(); /*ChatColor.GRAY*/;
         return nameColor + (isOnline() ? getPlayer().getName() : getName());
     }
 

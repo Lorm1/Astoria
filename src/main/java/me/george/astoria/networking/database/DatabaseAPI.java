@@ -42,7 +42,7 @@ public class DatabaseAPI {
     public static void loadPlayer(final UUID uuid, Player player) {
         try {
             if (!playerExists(uuid)) {
-                PreparedStatement ps = prepareStatement("INSERT INTO player_info(UUID, NAME, RANK, NATION, GOLD, ECASH, JOIN_DATE, LAST_LOGIN, LAST_LOGOUT, IS_BANNED, BAN_DURATION, BAN_REASON, BANNED_BY) VALUES ('" + uuid.toString() + "'," + "'" + player.getName() + "', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);"); // Default Rank: DEFAULT, Default Nation: HUMANS.
+                PreparedStatement ps = prepareStatement("INSERT INTO player_info(UUID, NAME, RANK, NATION, GOLD, ECASH, JOIN_DATE, LAST_LOGIN, IS_BANNED, BAN_DURATION, BAN_REASON, BANNED_BY) VALUES ('" + uuid.toString() + "'," + "'" + player.getName() + "', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);");
                 ps.executeUpdate();
                 ps.close();
 
@@ -66,7 +66,6 @@ public class DatabaseAPI {
 
             Timestamp joinDate = rs.getTimestamp("JOIN_DATE");
             Timestamp LAST_LOGIN = new Timestamp(System.currentTimeMillis());
-            Timestamp LAST_LOGOUT = rs.getTimestamp("LAST_LOGOUT");
 
             Boolean isPlayerBanned = rs.getBoolean("IS_BANNED");
 
@@ -84,7 +83,6 @@ public class DatabaseAPI {
 
             pl.setJoinDate(joinDate);
             pl.setLastLogin(LAST_LOGIN);
-            pl.setLastLogout(LAST_LOGOUT);
 
             pl.setIsBanned(isPlayerBanned);
 
@@ -100,6 +98,30 @@ public class DatabaseAPI {
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void savePlayer(Player player) {
+        try {
+            if (!playerExists(player.getUniqueId())) {
+                Bukkit.getLogger().info("[Database] Could not save player " + player.getName() + " as they do not exist in the database.");
+                return;
+            }
+            APlayer pl = getInstanceOfPlayer(player);
+
+            PreparedStatement ps = prepareStatement("UPDATE player_info SET RANK = ?, NATION = ?, GOLD = ?, ECASH = ?, LAST_LOGIN = ?, IS_BANNED = ? WHERE UUID = '" + player.getUniqueId() + "';");
+
+            ps.setString(1, pl.getRank().name().toUpperCase());
+            ps.setString(2, pl.getNation().name().toUpperCase());
+            ps.setInt(3, pl.getGold());
+            ps.setInt(4, pl.getEcash());
+            ps.setTimestamp(5, pl.getLastLogin());
+            ps.setBoolean(6, pl.getIsBanned());
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();;
         }
     }
 

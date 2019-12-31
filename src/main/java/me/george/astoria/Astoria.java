@@ -19,6 +19,7 @@ import me.george.astoria.game.player.PlayerConnection;
 import me.george.astoria.game.server.Setup;
 import me.george.astoria.game.world.Restrictions;
 import me.george.astoria.networking.database.Database;
+import me.george.astoria.networking.database.DatabaseAPI;
 import me.george.astoria.utils.ConcurrentSet;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -56,21 +57,32 @@ public class Astoria extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        shutdown();
         instance = null;
         database.getInstance().disconnect(); // We may not want to disable the database.
 
         Bukkit.getLogger().info("Disabling Astoria v." + Constants.SERVER_VERSION);
 
-        shutdown();
     }
 
     private void setup() {
         registerMechanics();
         registerCommands();
         registerEvents();
+
+        executeTasks();
     }
 
     private void shutdown() {
+        Bukkit.getScheduler().runTask(this, () -> {
+            int counter = 0;
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                DatabaseAPI.savePlayer(player);
+                counter++;
+            }
+            Bukkit.getLogger().info("[Database] Saving player data for " + counter + " players...");
+        });
+
         MechanicManager.stopMechanics();
         _hiddenPlayers.clear();
     }
@@ -110,5 +122,9 @@ public class Astoria extends JavaPlugin {
         cm.registerCommand(new CommandShout());
         cm.registerCommand(new CommandVanish());
         // cm.registerCommand(new CommandGUIHelp());
+    }
+
+    private void executeTasks() {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> Bukkit.getOnlinePlayers().forEach(p -> DatabaseAPI.savePlayer(p)), 20 * 5, 20 * 10);
     }
 }

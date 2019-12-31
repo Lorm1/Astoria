@@ -24,6 +24,11 @@ public class PlayerConnection implements Listener {
     @EventHandler
     public void onLogin(PlayerLoginEvent event) {
         DatabaseAPI.loadPlayer(event.getPlayer().getUniqueId(), event.getPlayer());
+        APlayer player = getInstanceOfPlayer(event.getPlayer());
+
+        if (player.isBanned) {
+            event.disallow(PlayerLoginEvent.Result.KICK_BANNED, "You have been banned until: " + player.getBanDuration() + "\nReason: " + player.getBanReason());
+        }
     }
 
     @EventHandler
@@ -66,7 +71,9 @@ public class PlayerConnection implements Listener {
         Player pl = event.getPlayer();
         APlayer player = getInstanceOfPlayer(pl);
 
-        // TODO: Database save player data.
+        DatabaseAPI.savePlayer(pl);
+        Bukkit.getLogger().info("[Database] Saved player data for " + pl.getName() + ".");
+
         Astoria._hiddenPlayers.remove(pl);
         APlayer.getAstoriaPlayers().remove(pl.getUniqueId(), player);
     }

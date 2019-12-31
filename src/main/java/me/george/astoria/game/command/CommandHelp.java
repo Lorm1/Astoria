@@ -11,6 +11,7 @@ import java.util.List;
 public class CommandHelp extends BaseCommand {
 
     private List<String> commands = Astoria.getInstance().getCommands();
+    private List<String> shownCommands = new ArrayList<>();
 
     private final int perPage = 6;
 
@@ -43,7 +44,6 @@ public class CommandHelp extends BaseCommand {
     }
 
     private void sendHelp(CommandSender sender, int page) {
-        List<String> shownCommands = new ArrayList<>();
         int upperBound, displayPage = page - 1, lowerBound = perPage * page;
 
         if (lowerBound + perPage > commands.size())
@@ -54,10 +54,8 @@ public class CommandHelp extends BaseCommand {
         for (int i = lowerBound; i < upperBound; i++)
             shownCommands.add(commands.get(i));
 
-        shownCommands.forEach(cmd -> {
-            sender.sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "     Astoria (" + ChatColor.GOLD + displayPage + "/" + getTotalPages() + ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + ")    ");
-            sender.sendMessage(ChatColor.GRAY + " - " + cmd);
-        });
+        sender.sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "     Astoria (" + ChatColor.GOLD + displayPage + "/" + getTotalPages() + ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + ")    ");
+        shownCommands.forEach(cmd -> sender.sendMessage(ChatColor.GRAY + " - " + cmd));
     }
 
     private int getTotalPages() { return (int) Math.ceil((double) commands.size() / perPage); }

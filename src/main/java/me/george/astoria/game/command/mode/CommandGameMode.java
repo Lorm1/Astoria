@@ -70,8 +70,8 @@ public class CommandGameMode extends BaseCommand {
                         target.setGameMode(GameMode.CREATIVE);
                         target.sendMessage((sender instanceof Player ? (getInstanceOfPlayer((Player) sender).getRank().getChatPrefix() +
                                 getInstanceOfPlayer((Player) sender).getDisplayName()) : ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "CONSOLE")
-                                + ChatColor.GREEN + " has set your Gamemode to " + ChatColor.LIGHT_PURPLE + "CREATIVE");
-                        sender.sendMessage(ChatColor.AQUA + "Set " + ChatColor.YELLOW + target.getName() + ChatColor.AQUA + "'s Gamemode TO - " + ChatColor.LIGHT_PURPLE + "CREATIVE");
+                                + ChatColor.GREEN + " has set your Gamemode to " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "CREATIVE");
+                        sender.sendMessage(ChatColor.AQUA + "Set " + ChatColor.YELLOW + target.getName() + ChatColor.AQUA + "'s Gamemode to - " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "CREATIVE");
                     } else {
                         sender.sendMessage(ChatColor.RED + "That player is already in Creative Mode.");
                     }
@@ -79,8 +79,8 @@ public class CommandGameMode extends BaseCommand {
                     if (!target.getGameMode().equals(GameMode.SURVIVAL)) {
                         target.setGameMode(GameMode.SURVIVAL);
                         target.sendMessage((sender instanceof Player ? (getInstanceOfPlayer((Player) sender).getRank().getChatPrefix() +
-                                getInstanceOfPlayer((Player) sender).getDisplayName()) : ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "CONSOLE") + ChatColor.GREEN + " has set your Gamemode to " + ChatColor.DARK_GREEN + "SURVIVAL");
-                        sender.sendMessage(ChatColor.AQUA + "Set " + ChatColor.YELLOW + target.getName() + ChatColor.AQUA + "'s Gamemode TO - " + ChatColor.DARK_GREEN + "SURVIVAL");
+                                getInstanceOfPlayer((Player) sender).getDisplayName()) : ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "CONSOLE") + ChatColor.GREEN + " has set your Gamemode to " + ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "SURVIVAL");
+                        sender.sendMessage(ChatColor.AQUA + "Set " + ChatColor.YELLOW + target.getName() + ChatColor.AQUA + "'s Gamemode to - " + ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "SURVIVAL");
                     } else {
                         sender.sendMessage(ChatColor.RED + "That player is already in Survival Mode.");
                     }
@@ -88,8 +88,8 @@ public class CommandGameMode extends BaseCommand {
                     if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
                         target.setGameMode(GameMode.SPECTATOR);
                         target.sendMessage((sender instanceof Player ? (getInstanceOfPlayer((Player) sender).getRank().getChatPrefix() +
-                                getInstanceOfPlayer((Player) sender).getDisplayName()) : ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "CONSOLE") + ChatColor.GREEN + " has set your Gamemode to " + ChatColor.YELLOW + "SPECTATOR");
-                        sender.sendMessage(ChatColor.AQUA + "Set " + ChatColor.YELLOW + target.getName() + ChatColor.AQUA + "'s Gamemode TO - " + ChatColor.YELLOW + "SPECTATOR");
+                                getInstanceOfPlayer((Player) sender).getDisplayName()) : ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "CONSOLE") + ChatColor.GREEN + " has set your Gamemode to " + ChatColor.YELLOW.toString() + ChatColor.BOLD + "SPECTATOR");
+                        sender.sendMessage(ChatColor.AQUA + "Set " + ChatColor.YELLOW + target.getName() + ChatColor.AQUA + "'s Gamemode to - " + ChatColor.YELLOW.toString() + ChatColor.BOLD + "SPECTATOR");
                     } else {
                         sender.sendMessage(ChatColor.RED + "That player is already in Spectator Mode.");
                     }
