@@ -22,23 +22,23 @@ public class CommandAlert extends BaseCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof ConsoleCommandSender) || (sender instanceof Player && !(getInstanceOfPlayer((Player) sender)).getRank().equals(Rank.ADMIN))) return true;
+        if (sender instanceof ConsoleCommandSender || (sender instanceof Player && getInstanceOfPlayer((Player) sender).getRank().equals(Rank.ADMIN))) {
+            if (args.length == 0) {
+                sender.sendMessage(ChatColor.RED + usage);
+                return true;
+            } else {
+                String message = "";
+                for (int i = 0; i < args.length; i++) {
+                    message += args[i] + " ";
+                }
 
-        if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + usage);
-            return true;
-        } else {
-            String message = "";
-            for (int i = 0; i < args.length; i++) {
-                message += args[i] + " ";
-            }
-
-            message.trim();
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 5, 5);
-                p.sendTitle(ChatColor.GRAY + "[" + ChatColor.RED + "ALERT" + ChatColor.GRAY + "]",
-                        ChatColor.GOLD + ChatColor.translateAlternateColorCodes('&', message), 15, 75, 25);
-                p.sendActionBar(ChatColor.RED + "ALERT");
+                message.trim();
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 5, 5);
+                    p.sendTitle(ChatColor.RED.toString() + ChatColor.BOLD + "ALERT",
+                            ChatColor.GOLD + ChatColor.translateAlternateColorCodes('&', message), 15, 75, 25);
+                    p.sendActionBar(ChatColor.RED.toString() + ChatColor.BOLD + "ALERT");
+                }
             }
         }
         return true;

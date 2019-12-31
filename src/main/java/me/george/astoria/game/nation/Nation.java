@@ -5,6 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public enum Nation {
     ORCS("Orcs", ChatColor.RED, new Location(Bukkit.getWorld("world"), 0, 0, 0)),
     VIKINGS("Vikings", ChatColor.BLUE, new Location(Bukkit.getWorld("world"), 1, 1, 1)),
@@ -19,5 +22,12 @@ public enum Nation {
         this.color = color;
         this.spawnLocation = spawnLocation;
         this.name = name;
+    }
+
+    public static boolean isValidNation(final String nation) {
+        return Arrays.stream(Nation.values())
+                .map(Nation::name)
+                .collect(Collectors.toSet())
+                .contains(nation);
     }
 }

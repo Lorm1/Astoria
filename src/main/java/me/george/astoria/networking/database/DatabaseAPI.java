@@ -33,8 +33,6 @@ public class DatabaseAPI {
             if (rs.next()) {
                 return true;
             }
-
-            Bukkit.getLogger().info("Could not find player " + Bukkit.getPlayer(uuid).getName() + " in the Database, creating now...");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,6 +41,14 @@ public class DatabaseAPI {
 
     public static void loadPlayer(final UUID uuid, Player player) {
         try {
+            if (!playerExists(uuid)) {
+                PreparedStatement ps = prepareStatement("INSERT INTO player_info(UUID, NAME, RANK, NATION, GOLD, ECASH, JOIN_DATE, LAST_LOGIN, LAST_LOGOUT, IS_BANNED, BAN_DURATION, BAN_REASON, BANNED_BY) VALUES ('" + uuid.toString() + "'," + "'" + player.getName() + "', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);"); // Default Rank: DEFAULT, Default Nation: HUMANS.
+                ps.executeUpdate();
+                ps.close();
+
+                Bukkit.getLogger().info("[Database] Created Player " + player.getName() + " and added to the Database.");
+            }
+
             PreparedStatement statement = prepareStatement("SELECT * FROM player_info WHERE UUID = ?");
             statement.setString(1, uuid.toString());
 
@@ -59,7 +65,7 @@ public class DatabaseAPI {
             int ecash = rs.getInt("ECASH");
 
             Timestamp joinDate = rs.getTimestamp("JOIN_DATE");
-            Timestamp LAST_LOGIN = new Timestamp(System.currentTimeMillis()); // login
+            Timestamp LAST_LOGIN = new Timestamp(System.currentTimeMillis());
             Timestamp LAST_LOGOUT = rs.getTimestamp("LAST_LOGOUT");
 
             Boolean isPlayerBanned = rs.getBoolean("IS_BANNED");
@@ -67,7 +73,7 @@ public class DatabaseAPI {
             Time BAN_DURATION = rs.getTime("BAN_DURATION");
 
             String BAN_REASON = rs.getString("BAN_REASON");
-            String BANNED_BY = rs.getString("BANNED)_BY");
+            String BANNED_BY = rs.getString("BANNED_BY");
 
             // Load player data
             pl.setRank(Rank.valueOf(rank));
@@ -90,13 +96,6 @@ public class DatabaseAPI {
 
             Bukkit.getLogger().info("[Database] Loaded player " + player.getName());
 
-            if (!playerExists(uuid)) {
-                PreparedStatement ps = prepareStatement("INSERT INTO player_info(UUID, NAME, RANK, NATION, GOLD, ECASH, JOIN_DATE, LAST_LOGIN, LAST_LOGOUT, IS_BANNED, BAN_DURATION, BAN_REASON, BANNED_BY) VALUES ('" + uuid.toString() + "'," + "'" + player.getName() + "', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);"); // Default Rank: DEFAULT, Default Nation: HUMANS.
-                ps.executeUpdate();
-                ps.close();
-
-                Bukkit.getLogger().info("[Database] Created Player " + player.getName() + " and added to the Database.");
-            }
             statement.close();
             rs.close();
         } catch (SQLException e) {

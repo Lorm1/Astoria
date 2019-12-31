@@ -2,6 +2,7 @@ package me.george.astoria.game.command.moderation;
 
 import me.george.astoria.game.Rank;
 import me.george.astoria.game.command.BaseCommand;
+import me.george.astoria.game.nation.Nation;
 import me.george.astoria.game.player.APlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,10 +15,10 @@ import java.util.Arrays;
 
 import static me.george.astoria.game.player.APlayer.getInstanceOfPlayer;
 
-public class CommandSetRank extends BaseCommand {
+public class CommandSetNation extends BaseCommand {
 
-    public CommandSetRank() {
-        super("setrank", "/setrank <player> <rank>", "Sets a player's rank.", Arrays.asList("sr"));
+    public CommandSetNation() {
+        super("setnation", "/setnation <player> <nation>", "Sets a player's nation.", Arrays.asList("setn", "snation", "sn"));
     }
 
     @Override
@@ -31,16 +32,11 @@ public class CommandSetRank extends BaseCommand {
             String targetName = args[0];
             if (Bukkit.getPlayer(targetName) != null) {
                 APlayer targetPlayer = getInstanceOfPlayer(Bukkit.getPlayer(targetName));
-                if ((targetPlayer.getRank().equals(Rank.ADMIN) && !(sender instanceof ConsoleCommandSender)) && targetPlayer.getPlayer() != sender) {
-                    sender.sendMessage(ChatColor.RED + "You cannot change this player's rank.");
-                    return true;
-                }
-
-                if (Rank.isValidRank(args[1].toUpperCase())) {
-                    targetPlayer.setRank(Rank.valueOf(args[1].toUpperCase()));
-                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + ChatColor.GREEN + "'s rank to " + targetPlayer.getRank().getChatColor().toString() + ChatColor.BOLD + targetPlayer.getRank().getInternalName().toUpperCase() + ".");
+                if (Nation.isValidNation(args[1].toUpperCase())) {
+                    targetPlayer.setNation(Nation.valueOf(args[1].toUpperCase()));
+                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + ChatColor.GREEN + "'s nation to " + targetPlayer.getNation().getColor() + targetPlayer.getNation().getName() + ".");
                 } else
-                    sender.sendMessage(ChatColor.RED + "Invalid Rank.");
+                    sender.sendMessage(ChatColor.RED + "Invalid Nation.");
             } else
                 sender.sendMessage(ChatColor.RED + "That player is not online.");
         }

@@ -28,6 +28,7 @@ public class CommandVanish extends BaseCommand {
             APlayer player = getInstanceOfPlayer(p);
 
             if (!player.isStaff()) return true;
+
             if (Astoria._hiddenPlayers.contains(p)) {
                 Astoria._hiddenPlayers.add(p);
                 for (Player pl : Bukkit.getOnlinePlayers()) {

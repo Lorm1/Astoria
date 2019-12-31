@@ -11,6 +11,7 @@ import me.george.astoria.game.command.chat.CommandMuteChat;
 import me.george.astoria.game.command.chat.CommandShout;
 import me.george.astoria.game.command.item.CommandGive;
 import me.george.astoria.game.command.mode.*;
+import me.george.astoria.game.command.moderation.CommandSetNation;
 import me.george.astoria.game.command.moderation.CommandSetRank;
 import me.george.astoria.game.mechanic.TestMechanic;
 import me.george.astoria.game.mechanic.template.MechanicManager;
@@ -96,6 +97,7 @@ public class Astoria extends JavaPlugin {
 
         cm.registerCommand(new CommandHelp());
         cm.registerCommand(new CommandSetRank());
+        cm.registerCommand(new CommandSetNation());
         cm.registerCommand(new CommandMessage());
         cm.registerCommand(new CommandFly());
         cm.registerCommand(new CommandSpeed());

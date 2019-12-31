@@ -1,5 +1,6 @@
 package me.george.astoria.game.command.chat;
 
+import me.george.astoria.game.Rank;
 import me.george.astoria.game.command.BaseCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,14 +21,15 @@ public class CommandClearChat extends BaseCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof ConsoleCommandSender) || (sender instanceof Player && !(getInstanceOfPlayer((Player) sender)).isStaff())) return true;
-        for (Player pl : Bukkit.getOnlinePlayers()) {
-            if (!getInstanceOfPlayer(pl).isStaff()) { // dont spam staff
-                for (int i = 0; i < 100; i++)
-                    pl.sendMessage(" ");
+        if (sender instanceof ConsoleCommandSender || (sender instanceof Player && getInstanceOfPlayer((Player) sender).getRank().equals(Rank.ADMIN))) {
+            for (Player pl : Bukkit.getOnlinePlayers()) {
+                if (!getInstanceOfPlayer(pl).isStaff()) { // dont spam staff
+                    for (int i = 0; i < 100; i++)
+                        pl.sendMessage(" ");
+                }
             }
+            Bukkit.broadcastMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "The chat has been cleared.");
         }
-        Bukkit.broadcastMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "The chat has been cleared.");
         return true;
     }
 }

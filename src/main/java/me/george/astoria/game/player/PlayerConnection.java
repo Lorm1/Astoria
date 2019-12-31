@@ -11,24 +11,19 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.UUID;
 
 import static me.george.astoria.game.player.APlayer.getInstanceOfPlayer;
 
 public class PlayerConnection implements Listener {
 
     @EventHandler
-    public void onAsyncPreJoin(AsyncPlayerPreLoginEvent event) {
-        Player player = Bukkit.getPlayer(event.getName());
-        UUID uuid = event.getUniqueId();
-
-        DatabaseAPI.loadPlayer(uuid, player);
+    public void onLogin(PlayerLoginEvent event) {
+        DatabaseAPI.loadPlayer(event.getPlayer().getUniqueId(), event.getPlayer());
     }
 
     @EventHandler
@@ -50,24 +45,20 @@ public class PlayerConnection implements Listener {
         }
 
         for (Player p : Astoria._hiddenPlayers) {
-            pl.hidePlayer(p);
+            pl.hidePlayer(Astoria.getInstance(), p);
             p.setPlayerListName(null);
         }
 
         if (!pl.hasPlayedBefore()) {
-            pl.sendMessage("welcome");
-            pl.sendActionBar("welcome"); // debug
-
             pl.teleport(Nation.HUMANS.getSpawnLocation());
+
+            pl.sendMessage("welcome");
             pl.playSound(pl.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 5, 5);
             pl.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 5, 50));
             pl.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 3, 35));
         }
-
-        // TODO: Database access on-join ?
-        player.setRank(Rank.ADMIN); // DEBUG
-        player.setNation(Nation.ORCS); // DEBUG
-
+//        player.setRank(Rank.ADMIN); // DEBUG
+//        player.setNation(Nation.ORCS); // DEBUG
     }
 
     @EventHandler
