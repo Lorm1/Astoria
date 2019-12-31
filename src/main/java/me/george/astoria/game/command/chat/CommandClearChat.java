@@ -28,7 +28,7 @@ public class CommandClearChat extends BaseCommand {
                         pl.sendMessage(" ");
                 }
             }
-            Bukkit.broadcastMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "The chat has been cleared.");
+            Bukkit.broadcastMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "The chat has been cleared.");
         }
         return true;
     }

@@ -34,7 +34,8 @@ public class CommandSetNation extends BaseCommand {
                 APlayer targetPlayer = getInstanceOfPlayer(Bukkit.getPlayer(targetName));
                 if (Nation.isValidNation(args[1].toUpperCase())) {
                     targetPlayer.setNation(Nation.valueOf(args[1].toUpperCase()));
-                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + ChatColor.GREEN + "'s nation to " + targetPlayer.getNation().getColor() + targetPlayer.getNation().getName() + ".");
+                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + ChatColor.GREEN + "'s nation to " + targetPlayer.getNation().getColor() + targetPlayer.getNation().getName() + ChatColor.GREEN + ".");
+                    targetPlayer.sendMessage(ChatColor.DARK_AQUA + "Your nation has been changed to " + targetPlayer.getNation().getColor() + targetPlayer.getNation().getName() + ChatColor.DARK_AQUA + " by " + ChatColor.YELLOW + sender.getName() + ChatColor.DARK_AQUA + ".");
                 } else
                     sender.sendMessage(ChatColor.RED + "Invalid Nation.");
             } else

@@ -33,11 +33,11 @@ public class CommandGod extends BaseCommand {
 
             if (!p.isInvulnerable()) {
                 p.setInvulnerable(true);
-                p.sendMessage(ChatColor.AQUA + "God Mode - " + ChatColor.GREEN.toString() + ChatColor.BOLD + "Enabled");
+                p.sendMessage(ChatColor.DARK_AQUA + "God Mode - " + ChatColor.GREEN + "Enabled");
                 return true;
             } else {
                 p.setInvulnerable(false);
-                p.sendMessage(ChatColor.AQUA + "God Mode - " + ChatColor.RED.toString() + ChatColor.BOLD + "Disabled");
+                p.sendMessage(ChatColor.DARK_AQUA + "God Mode - " + ChatColor.RED + "Disabled");
             }
         } else if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
@@ -48,16 +48,15 @@ public class CommandGod extends BaseCommand {
 
             if (!target.isInvulnerable()) {
                 target.setInvulnerable(true);
-                sender.sendMessage(ChatColor.GREEN + "Enabled God Mode for " + ChatColor.YELLOW + target.getName());
-                target.sendMessage(ChatColor.GREEN + "You are now in God Mode.");
+                sender.sendMessage(ChatColor.GREEN + "Enabled God Mode for " + ChatColor.YELLOW + target.getName() + ChatColor.GREEN + ".");
+                target.sendMessage(ChatColor.DARK_AQUA + "God Mode - " + ChatColor.GREEN + "Enabled");
             } else {
                 target.setInvulnerable(false);
-                sender.sendMessage(ChatColor.RED + "Disabled God Mode for " + ChatColor.YELLOW + target.getName());
-                target.sendMessage(ChatColor.RED + "You are no longer in God Mode.");
+                sender.sendMessage(ChatColor.RED + "Disabled God Mode for " + ChatColor.YELLOW + target.getName() + ChatColor.RED + ".");
+                target.sendMessage(ChatColor.DARK_AQUA + "God Mode - " + ChatColor.RED + "Disabled");
             }
-        } else {
+        } else
             sender.sendMessage(ChatColor.RED + usage);
-        }
         return true;
     }
 }

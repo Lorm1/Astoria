@@ -33,7 +33,7 @@ public class CommandShout extends BaseCommand {
                 }
                 message.trim();
 
-                Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + " >> " + ChatColor.AQUA + message);
+                Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + " >> " + ChatColor.DARK_AQUA + message);
                 Bukkit.getOnlinePlayers().forEach(p -> p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 15, 15));
             }
         }

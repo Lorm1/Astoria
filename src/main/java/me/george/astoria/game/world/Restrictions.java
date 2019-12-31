@@ -4,7 +4,6 @@ import me.george.astoria.game.Rank;
 import me.george.astoria.game.player.APlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,9 +27,8 @@ public class Restrictions implements Listener {
         String msg = event.getChatMessage();
 
         if (!player.getRank().equals(Rank.ADMIN)) {
-            if (msg.contains("/")) {
+            if (msg.contains("/"))
                 event.getTabCompletions().clear();
-            }
         }
     }
 
@@ -39,16 +37,14 @@ public class Restrictions implements Listener {
         Player p = e.getPlayer();
         APlayer player = getInstanceOfPlayer(p);
 
-        if ((!p.isOp() || player.getRank().equals(Rank.ADMIN)) && !p.getGameMode().equals(GameMode.CREATIVE)) { // only admins in creative can modify the world.
+        if ((!p.isOp() || player.getRank().equals(Rank.ADMIN)) && !p.getGameMode().equals(GameMode.CREATIVE))  // only admins in creative can modify the world.
             e.setCancelled(true);
-        }
     }
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
-        if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)) {
+        if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL))
             event.setCancelled(true);
-        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -60,17 +56,16 @@ public class Restrictions implements Listener {
         Block block = e.getClickedBlock();
 
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-            if (p.getItemInHand().getType() == null || p.getItemInHand() == null) return;
+            if (p.getInventory().getItemInMainHand().getType() == null || p.getInventory().getItemInMainHand() == null) return;
 
             if (!player.getRank().equals(Rank.ADMIN) && !p.getGameMode().equals(GameMode.CREATIVE)) {
-                if (block.getState() instanceof InventoryHolder) {
-                    e.setCancelled(true);
-                }
-
-                if (p.getItemInHand().getType() == Material.SHEARS)
+                if (block.getState() instanceof InventoryHolder)
                     e.setCancelled(true);
 
-                if (p.getItemInHand().getType() == Material.ENDER_PEARL)
+                if (p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
+                    e.setCancelled(true);
+
+                if (p.getInventory().getItemInMainHand().getType() == Material.ENDER_PEARL)
                     e.setCancelled(true);
             }
         }
@@ -80,12 +75,9 @@ public class Restrictions implements Listener {
     public void onItemSwap(PlayerSwapHandItemsEvent e) {
         Player p = e.getPlayer();
 
-        if (e.getMainHandItem() == null || e.getMainHandItem().getType() == null || e.getMainHandItem().getType() == Material.AIR || p.getItemInHand() == null || p.getItemInHand().getType() == null)
+        if (e.getMainHandItem() == null || e.getMainHandItem().getType() == null || e.getMainHandItem().getType() == Material.AIR
+                || p.getInventory().getItemInMainHand() == null || p.getInventory().getItemInMainHand().getType() == null)
             return;
-
-        if (e.getMainHandItem().getType() == Material.DIAMOND_SWORD || e.getMainHandItem().getType() == Material.DIAMOND_AXE || e.getMainHandItem().getType() == Material.IRON_AXE || e.getMainHandItem().getType() == Material.IRON_SWORD) {
-            p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 5, 5);
-        }
     }
 
     @EventHandler
@@ -93,9 +85,8 @@ public class Restrictions implements Listener {
         Player p = e.getPlayer();
         APlayer player = getInstanceOfPlayer(p);
 
-        if (!player.getRank().equals(Rank.ADMIN)) {
+        if (!player.getRank().equals(Rank.ADMIN))
             e.setCancelled(true);
-        }
     }
 
     @EventHandler

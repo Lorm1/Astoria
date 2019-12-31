@@ -35,14 +35,14 @@ public class CommandVanish extends BaseCommand {
                     pl.hidePlayer(Astoria.getInstance(), p);
                     p.setPlayerListName(null);
                 }
-                p.sendMessage(ChatColor.AQUA + "Vanish - " + ChatColor.GREEN.toString() + ChatColor.BOLD + "ENABLED");
+                p.sendMessage(ChatColor.DARK_AQUA + "Vanish - " + ChatColor.GREEN + "Enabled");
             } else {
                 Astoria._hiddenPlayers.remove(p);
                 for (Player pl : Bukkit.getOnlinePlayers()) {
                     pl.showPlayer(Astoria.getInstance(), p);
                     p.setPlayerListName(p.getDisplayName());
                 }
-                p.sendMessage(ChatColor.AQUA + "Vanish - " + ChatColor.RED.toString() + ChatColor.BOLD + "DISABLED");
+                p.sendMessage(ChatColor.AQUA + "Vanish - " + ChatColor.RED + "Disabled");
             }
         } else if (args.length == 1) {
             if (sender instanceof ConsoleCommandSender || (sender instanceof Player && getInstanceOfPlayer((Player) sender).isStaff())) {
@@ -54,8 +54,8 @@ public class CommandVanish extends BaseCommand {
 
                 if (!Astoria._hiddenPlayers.contains(target)) {
                     Astoria._hiddenPlayers.add(target);
-                    sender.sendMessage(ChatColor.GREEN + "Vanished player " + ChatColor.YELLOW + getInstanceOfPlayer(target).getDisplayName());
-                    target.sendMessage(ChatColor.GREEN + "You were vanishe.");
+                    sender.sendMessage(ChatColor.GREEN + "Vanished player " + ChatColor.YELLOW + getInstanceOfPlayer(target).getDisplayName() + ChatColor.GREEN + ".");
+                    target.sendMessage(ChatColor.DARK_AQUA + "Vanish - " + ChatColor.GREEN + "Enabled");
 
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         pl.hidePlayer(Astoria.getInstance(), target);
@@ -63,8 +63,8 @@ public class CommandVanish extends BaseCommand {
                     }
                 } else {
                     Astoria._hiddenPlayers.remove(target);
-                    sender.sendMessage(ChatColor.RED + "Unvanished player " + ChatColor.YELLOW + getInstanceOfPlayer(target).getDisplayName());
-                    target.sendMessage(ChatColor.RED + "You were unvanished.");
+                    sender.sendMessage(ChatColor.RED + "Unvanished player " + ChatColor.YELLOW + getInstanceOfPlayer(target).getDisplayName() + ChatColor.RED + ".");
+                    target.sendMessage(ChatColor.DARK_AQUA + "Vanish - " + ChatColor.RED + "Disabled");
 
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         pl.showPlayer(Astoria.getInstance(), target);

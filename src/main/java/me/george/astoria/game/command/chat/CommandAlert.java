@@ -17,7 +17,7 @@ import static me.george.astoria.game.player.APlayer.getInstanceOfPlayer;
 public class CommandAlert extends BaseCommand {
 
     public CommandAlert() {
-        super("alert", "/alert <message>", "Alerts online users with a specific message.", Arrays.asList("alertall"));
+        super("alert", "/alert <message>", "Alerts online users with a specific message.", Arrays.asList("alertall", "warning"));
     }
 
     @Override

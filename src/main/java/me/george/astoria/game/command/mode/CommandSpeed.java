@@ -51,14 +51,13 @@ public class CommandSpeed extends BaseCommand {
             if (args[0].equalsIgnoreCase("fly")) {
                 p.setFlySpeed(speed);
                 p.setAllowFlight(true);
-                p.sendMessage(ChatColor.AQUA + "Set your flying speed to " + ChatColor.YELLOW + args[1]);
+                p.sendMessage(ChatColor.DARK_AQUA + "Flying Speed - " + ChatColor.GOLD + args[1]);
             } else if (args[0].equalsIgnoreCase("walk")) {
                 p.setWalkSpeed(speed); // default: 0.2f
-                p.sendMessage(ChatColor.AQUA + "Set your walking speed to " + ChatColor.YELLOW + args[1]);
+                p.sendMessage(ChatColor.DARK_AQUA + "Walking Speed - " + ChatColor.GOLD + args[1]);
             }
-        } else {
+        } else
             p.sendMessage(ChatColor.RED + usage);
-        }
         return true;
     }
 }

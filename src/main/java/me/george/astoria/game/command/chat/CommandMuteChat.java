@@ -26,7 +26,7 @@ public class CommandMuteChat extends BaseCommand {
             // Invert the chatEnabled boolean to the opposite
             Chat.chatEnabled = !Chat.chatEnabled;
             // See if the chatEnabled boolean is true if it is print the string 'Unmuted the chat' if not then 'Muted the chat'
-            sender.sendMessage((Chat.chatEnabled ? ChatColor.GREEN + "Unmuted the chat" : ChatColor.RED + "Muted the chat"));
+            sender.sendMessage((Chat.chatEnabled ? ChatColor.GREEN + "Unmuted the chat" : ChatColor.DARK_RED + "Muted the chat"));
             Bukkit.broadcastMessage((Chat.chatEnabled ? ChatColor.GREEN + "The chat has been unmuted." : ChatColor.RED + "The chat has been muted."));
             Bukkit.getLogger().warning("[CHAT] The Chat has been muted by " + sender.getName());
         }

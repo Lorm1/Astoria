@@ -26,7 +26,7 @@ public class CommandGive extends BaseCommand {
                 return true;
             } else if (args.length == 1) { // /give <item>
                 if (sender instanceof ConsoleCommandSender) {
-                    sender.sendMessage(ChatColor.RED + "Cannot execute this command as CONSOLE.");
+                    sender.sendMessage("Cannot execute this command as CONSOLE.");
                     return true;
                 }
                 Material material;

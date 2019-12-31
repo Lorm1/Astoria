@@ -38,7 +38,8 @@ public class CommandSetRank extends BaseCommand {
 
                 if (Rank.isValidRank(args[1].toUpperCase())) {
                     targetPlayer.setRank(Rank.valueOf(args[1].toUpperCase()));
-                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + ChatColor.GREEN + "'s rank to " + targetPlayer.getRank().getChatColor().toString() + ChatColor.BOLD + targetPlayer.getRank().getInternalName().toUpperCase() + ".");
+                    sender.sendMessage(ChatColor.GREEN + "You have set " + targetPlayer.getDisplayName() + ChatColor.GREEN + "'s rank to " + targetPlayer.getRank().getChatColor().toString() + ChatColor.BOLD + targetPlayer.getRank().getInternalName().toUpperCase() + ChatColor.GREEN + ".");
+                    targetPlayer.sendMessage(ChatColor.DARK_AQUA + "Your rank has been set to " + targetPlayer.getRank().getChatColor().toString() + ChatColor.BOLD + targetPlayer.getRank().getInternalName().toUpperCase() + ChatColor.DARK_AQUA + " by " + ChatColor.YELLOW + sender.getName() + ChatColor.DARK_AQUA + ".");
                 } else
                     sender.sendMessage(ChatColor.RED + "Invalid Rank.");
             } else

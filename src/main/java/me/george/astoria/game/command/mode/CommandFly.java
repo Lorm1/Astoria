@@ -30,11 +30,11 @@ public class CommandFly extends BaseCommand {
                 Player p = (Player) sender;
                 if (!p.getAllowFlight()) {
                     p.setAllowFlight(true);
-                    p.sendMessage(ChatColor.AQUA + "Flight - " + ChatColor.GREEN.toString() + ChatColor.BOLD + "Enabled");
+                    p.sendMessage(ChatColor.DARK_AQUA + "Flight - " + ChatColor.GREEN + "Enabled");
                     return true;
                 } else {
                     p.setAllowFlight(false);
-                    p.sendMessage(ChatColor.AQUA + "Flight - " + ChatColor.RED.toString() + ChatColor.BOLD + "Disabled");
+                    p.sendMessage(ChatColor.DARK_AQUA + "Flight - " + ChatColor.RED + "Disabled");
                 }
             } else if (args.length == 1) {
                 Player target = Bukkit.getPlayer(args[0]);
@@ -46,12 +46,12 @@ public class CommandFly extends BaseCommand {
                 if (!target.getAllowFlight()) {
                     target.setAllowFlight(true);
                     sender.sendMessage(ChatColor.GREEN + "Enabled flying for " + APlayer.getInstanceOfPlayer(target).getRank().getChatPrefix() + APlayer.getInstanceOfPlayer(target).getDisplayName());
-                    target.sendMessage(ChatColor.AQUA + "Flight - " + ChatColor.GREEN.toString() + ChatColor.BOLD + "Enabled" + ChatColor.AQUA + " by " + (sender instanceof ConsoleCommandSender ?
+                    target.sendMessage(ChatColor.DARK_AQUA + "Flight - " + ChatColor.GREEN + "Enabled" + ChatColor.DARK_AQUA + " by " + (sender instanceof ConsoleCommandSender ?
                             ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "CONSOLE" : APlayer.getInstanceOfPlayer(target).getRank().getChatPrefix() + APlayer.getInstanceOfPlayer(target).getDisplayName()));
                 } else {
                     target.setAllowFlight(false);
                     sender.sendMessage(ChatColor.RED + "Disabled flying for " + APlayer.getInstanceOfPlayer(target).getRank().getChatPrefix() + APlayer.getInstanceOfPlayer(target).getDisplayName());
-                    target.sendMessage(ChatColor.RED + "You can no longer fly.");
+                    target.sendMessage(ChatColor.DARK_AQUA + "Flight - " + ChatColor.RED + "Disabled");
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "Invalid Usage.");
