@@ -1,6 +1,7 @@
-package me.george.astoria.game.command;
+package me.george.astoria.game.command.moderation;
 
 import me.george.astoria.game.Rank;
+import me.george.astoria.game.command.BaseCommand;
 import me.george.astoria.game.player.APlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

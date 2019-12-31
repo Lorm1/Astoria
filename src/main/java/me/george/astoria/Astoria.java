@@ -1,15 +1,17 @@
 package me.george.astoria;
 
+import lombok.Getter;
 import me.george.astoria.game.chat.Chat;
+import me.george.astoria.game.command.CommandHelp;
 import me.george.astoria.game.command.CommandManager;
 import me.george.astoria.game.command.CommandMessage;
-import me.george.astoria.game.command.CommandSetRank;
 import me.george.astoria.game.command.chat.CommandAlert;
 import me.george.astoria.game.command.chat.CommandClearChat;
 import me.george.astoria.game.command.chat.CommandMuteChat;
 import me.george.astoria.game.command.chat.CommandShout;
 import me.george.astoria.game.command.item.CommandGive;
 import me.george.astoria.game.command.mode.*;
+import me.george.astoria.game.command.moderation.CommandSetRank;
 import me.george.astoria.game.mechanic.TestMechanic;
 import me.george.astoria.game.mechanic.template.MechanicManager;
 import me.george.astoria.game.player.PlayerConnection;
@@ -22,6 +24,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class Astoria extends JavaPlugin {
@@ -33,6 +37,9 @@ public class Astoria extends JavaPlugin {
     }
 
     private Database database;
+
+    @Getter
+    public List<String> commands = new ArrayList<>();
 
     public static Set<Player> _hiddenPlayers = new ConcurrentSet<>();
 
@@ -83,8 +90,11 @@ public class Astoria extends JavaPlugin {
     }
 
     private void registerCommands() {
+        this.getDescription().getCommands().keySet().forEach(command -> commands.add(command));
+
         CommandManager cm = new CommandManager();
 
+        cm.registerCommand(new CommandHelp());
         cm.registerCommand(new CommandSetRank());
         cm.registerCommand(new CommandMessage());
         cm.registerCommand(new CommandFly());
