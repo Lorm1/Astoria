@@ -2,7 +2,6 @@ package me.george.astoria;
 
 import lombok.Getter;
 import me.george.astoria.game.chat.Chat;
-import me.george.astoria.game.command.CommandGUIHelp;
 import me.george.astoria.game.command.CommandHelp;
 import me.george.astoria.game.command.CommandManager;
 import me.george.astoria.game.command.CommandMessage;
@@ -57,7 +56,7 @@ public class Astoria extends JavaPlugin {
     @Override
     public void onDisable() {
         instance = null;
-        // database.getInstance().disconnect(); We dont want to be disabling the database
+        database.getInstance().disconnect(); // We may not want to disable the database.
 
         Bukkit.getLogger().info("Disabling Astoria v." + Constants.SERVER_VERSION);
 
@@ -108,6 +107,6 @@ public class Astoria extends JavaPlugin {
         cm.registerCommand(new CommandAlert());
         cm.registerCommand(new CommandShout());
         cm.registerCommand(new CommandVanish());
-        cm.registerCommand(new CommandGUIHelp());
+        // cm.registerCommand(new CommandGUIHelp());
     }
 }
