@@ -2,6 +2,7 @@ package me.george.astoria;
 
 import lombok.Getter;
 import me.george.astoria.game.chat.Chat;
+import me.george.astoria.game.command.CommandFeed;
 import me.george.astoria.game.command.CommandHelp;
 import me.george.astoria.game.command.CommandManager;
 import me.george.astoria.game.command.CommandMessage;
@@ -11,8 +12,7 @@ import me.george.astoria.game.command.chat.CommandMuteChat;
 import me.george.astoria.game.command.chat.CommandShout;
 import me.george.astoria.game.command.item.CommandGive;
 import me.george.astoria.game.command.mode.*;
-import me.george.astoria.game.command.moderation.CommandSetNation;
-import me.george.astoria.game.command.moderation.CommandSetRank;
+import me.george.astoria.game.command.moderation.*;
 import me.george.astoria.game.mechanic.TestMechanic;
 import me.george.astoria.game.mechanic.template.MechanicManager;
 import me.george.astoria.game.player.PlayerConnection;
@@ -121,6 +121,12 @@ public class Astoria extends JavaPlugin {
         cm.registerCommand(new CommandAlert());
         cm.registerCommand(new CommandShout());
         cm.registerCommand(new CommandVanish());
+        cm.registerCommand(new CommandKick());
+        cm.registerCommand(new CommandBan());
+        cm.registerCommand(new CommandUnban());
+        cm.registerCommand(new CommandMute());
+        cm.registerCommand(new CommandUnmute());
+        cm.registerCommand(new CommandFeed());
         // cm.registerCommand(new CommandGUIHelp());
     }
 

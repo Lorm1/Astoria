@@ -51,13 +51,13 @@ public class APlayer {
     String muteReason, banReason;
 
     @Getter @Setter
-    Boolean isBanned;
+    Boolean isBanned, isMuted;
 
     @Getter @Setter
     Timestamp joinDate, lastLogin;
 
     @Getter @Setter
-    Time banDuration;
+    Time banDuration, muteDuration;
 
 
     public void addGold(int gold) {

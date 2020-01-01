@@ -39,6 +39,42 @@ public class DatabaseAPI {
         return false;
     }
 
+    public static boolean playerExists(String name) {
+        try {
+            PreparedStatement statement = prepareStatement("SELECT * FROM player_info WHERE NAME = ?");
+            statement.setString(1, name);
+
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static UUID getPlayerUUID(String playerName) {
+        if (!playerExists(playerName)) throw new NullPointerException("Player: " + playerName + " has never played before.");
+
+        PreparedStatement sts;
+        try {
+            sts = prepareStatement("SELECT UUID FROM player_info WHERE NAME = ?");
+            sts.setString(1, playerName);
+
+            ResultSet rs = sts.executeQuery();
+
+            if (rs.next()) {
+                return UUID.fromString(rs.getString("UUID"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        throw new NullPointerException("Player: " + playerName + " has never played before.");
+    }
+
     public static void loadPlayer(final UUID uuid, Player player) {
         try {
             if (!playerExists(uuid)) {

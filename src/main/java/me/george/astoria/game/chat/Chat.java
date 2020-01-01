@@ -32,6 +32,15 @@ public class Chat implements Listener {
 
         event.setCancelled(true);
 
+        if (!chatEnabled && !player.isStaff()) {
+            player.sendMessage(ChatColor.RED + "The chat is muted.");
+            return;
+        }
+
+        if (player.getIsMuted()) {
+            player.sendMessage(ChatColor.RED + "You are muted.\nMuted By: " + ChatColor.DARK_RED + player.getMutedBy() + ChatColor.RED + "Reason: " + player.getMuteReason() + ChatColor.RED + "\nExpires: " + ChatColor.GOLD + player.getMuteDuration());
+            return;
+        }
         String message = event.getMessage();
 
         if (containsIllegal(message)) {
@@ -47,10 +56,6 @@ public class Chat implements Listener {
         String checkedMessage = player.isStaff() ? message : checkForBannedWords(message);
         String formattedMessage = rank.getChatPrefix() + player.getDisplayName() + ": " + ChatColor.WHITE + checkedMessage;
 
-        if (!chatEnabled && !player.isStaff()) {
-            player.sendMessage(ChatColor.RED + "The chat is muted.");
-            return;
-        }
 
         Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(formattedMessage));
 
